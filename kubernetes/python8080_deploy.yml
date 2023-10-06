@@ -1,0 +1,21 @@
+apiVersion : apps/v1
+kind : Deployment
+metadata:
+  name: python8080-deploy
+  lables:
+    app: python8080
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      project: python8080
+  template:
+    metadata:
+      labels:
+        project: python8080
+    spec:
+      containers:
+        - name: pyrhon-8080
+          image: doshik101/python8080:latest
+          ports:
+            - containerPort: 8080

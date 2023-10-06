@@ -1,0 +1,19 @@
+---
+# tasks file for elk_docker
+- name: install docker
+  apt:
+    name: "{{ item }}"
+    state: latest
+  loop:
+    - docker
+    - docker-compose
+
+- name: copy docker files
+  copy:
+    src: '/etc/docker_files'
+    dest: '/etc'
+
+- name: docker-compose starting
+  become: True
+  shell:
+    cmd: "docker-compose -f /etc/docker_files/docker-compose.yml up -d"

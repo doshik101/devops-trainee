@@ -1,0 +1,10 @@
+---
+- hosts: study_servers
+  become: true
+  become_method: sudo
+  become_user: root
+  remote_user: student
+  roles:
+    - default_role
+    - dns
+    - elk_docker

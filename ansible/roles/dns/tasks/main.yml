@@ -1,0 +1,10 @@
+---
+# tasks file for dns
+
+- name: add defaul dns (8.8.8.8 1.1.1.1)
+  lineinfile: dest=/etc/systemd/resolved.conf regexp='DNS' line='DNS= 8.8.8.8 1.1.1.1'
+
+- name: restarting resolved
+  service:
+    name: systemd-resolved
+    state: restarted
