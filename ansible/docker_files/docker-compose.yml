@@ -1,0 +1,29 @@
+version: '3.7'
+
+services:
+  elasticsearch:
+    image: elasticsearch:8.10.2
+    ports:
+      - '9200:9200'
+    environment:
+      - discovery.type=single-node
+#    command: bash -c "/usr/share/elasticsearch/bin/elasticsearch-users useradd logstash -p 123456 -r superuser && /usr/share/elasticsearch/bin/elasticsearch-users useradd admin -p 123456 -r superuser && tail -f /dev/null"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+
+  kibana:
+    image: kibana:8.10.2
+    ports:
+      - '5601:5601'
+
+  logstash:
+    image: logstash:8.10.2
+    ports:
+      - '5044:5044'
+    volumes:
+      - type: bind
+        source: ./logstash_pipeline/
+        target: /usr/share/logstash/pipeline
+        read_only: true
